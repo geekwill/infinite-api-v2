@@ -3,18 +3,18 @@
 // app/service/topics.js
 const Service = require('egg').Service;
 
-class BulletinsService extends Service {
+class ChassesService extends Service {
   /**
    * 搜索公告
    * @param {Object} params 搜索参数
    */
   async search(params) {
     // 假如 我们拿到用户 id 从数据库获取用户详细信息
-    const bulletins = await this.app.mysql.select('bulletins', {
+    const chasses = await this.app.mysql.select('chasses', {
       limit: 10,
       offset: (params.page - 1) * 10,
     });
-    return bulletins;
+    return chasses;
   }
 
   /**
@@ -23,9 +23,9 @@ class BulletinsService extends Service {
    */
   async get(key) {
     // 假如 我们拿到用户 id 从数据库获取用户详细信息
-    const bulletin = await this.app.mysql.get('bulletins', { key });
-    return bulletin;
+    const chasse = await this.app.mysql.get('chasses', { key });
+    return chasse;
   }
 }
 
-module.exports = BulletinsService;
+module.exports = ChassesService;

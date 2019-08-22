@@ -12,7 +12,7 @@ const getRule = {
   key: 'string',
 };
 
-class BulletinsController extends Controller {
+class ChassesController extends Controller {
   /**
    * 搜索公告
    */
@@ -20,9 +20,9 @@ class BulletinsController extends Controller {
     const ctx = this.ctx;
     ctx.validate(searchRule, ctx.request.body);
     // 调用 service 创建一个 topic
-    const bulletins = await ctx.service.bulletins.search(ctx.request.body);
+    const chasses = await ctx.service.chasses.search(ctx.request.body);
     // 设置响应内容和响应状态码
-    ctx.success(bulletins);
+    ctx.success(chasses);
   }
 
   /**
@@ -32,9 +32,9 @@ class BulletinsController extends Controller {
     const ctx = this.ctx;
     ctx.validate(getRule, ctx.params);
     // 调用 service 创建一个 topic
-    const bulletin = await ctx.service.bulletins.get(ctx.params.key);
+    const chasse = await ctx.service.chasses.get(ctx.params.key);
     // 设置响应内容和响应状态码
-    ctx.success(bulletin);
+    ctx.success(chasse);
   }
 }
-module.exports = BulletinsController;
+module.exports = ChassesController;
