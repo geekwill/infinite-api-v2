@@ -17,4 +17,9 @@ module.exports = app => {
   // 燃油达标公告
   app.router.post('/api/v2/fueloils/search', app.controller.fueloils.search);
   app.router.get('/api/v2/fueloils', app.controller.fueloils.get);
+  // 用户
+  app.router.post('/api/v2/user/login', app.controller.user.login);
+  // 收藏
+  app.router.post('/api/v2/favorites/search', app.jwt, app.controller.favorites.search);
+  app.router.get('/api/v2/favorites', app.jwt, app.controller.favorites.create);
 };

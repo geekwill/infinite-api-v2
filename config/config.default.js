@@ -16,7 +16,7 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1566375679681_1913';
 
   // add your middleware config here
-  config.middleware = [ 'errorHandler' ];
+  config.middleware = [ 'userHandler', 'errorHandler' ];
 
   config.mysql = {
     // 单数据库信息配置
@@ -36,6 +36,10 @@ module.exports = appInfo => {
     app: true,
     // 是否加载到 agent 上，默认关闭
     agent: true,
+  };
+
+  config.jwt = {
+    secret: 'TOKEN_WILL',
   };
 
   config.errorHandler = {
