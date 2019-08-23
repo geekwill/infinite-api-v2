@@ -8,10 +8,8 @@ module.exports = (option, app) => {
       if (authorization) {
         // 截取 token 部分
         const token = authorization.split(' ')[1];
-        if (token) {
-          // 解析 token 里的用户信息
-          ctx.user = app.jwt.decode(token);
-        }
+        // 解析 token 里的用户信息
+        ctx.user = app.jwt.decode(token);
       }
       await next();
     } catch (err) {
