@@ -9,10 +9,10 @@ const searchRule = {
 };
 // 定义创建接口的请求参数规则
 const getRule = {
-  key: 'string',
+  model: 'string',
 };
 
-class BulletinsController extends Controller {
+class FueloilsController extends Controller {
   /**
    * 搜索公告
    */
@@ -20,9 +20,9 @@ class BulletinsController extends Controller {
     const ctx = this.ctx;
     ctx.validate(searchRule, ctx.request.body);
     // 调用 service 创建一个 topic
-    const bulletins = await ctx.service.bulletins.search(ctx.request.body);
+    const fueloils = await ctx.service.fueloils.search(ctx.request.body);
     // 设置响应内容和响应状态码
-    ctx.success(bulletins);
+    ctx.success(fueloils);
   }
 
   /**
@@ -32,9 +32,9 @@ class BulletinsController extends Controller {
     const ctx = this.ctx;
     ctx.validate(getRule, ctx.query);
     // 调用 service 创建一个 topic
-    const bulletin = await ctx.service.bulletins.get(ctx.query.key);
+    const fueloil = await ctx.service.fueloils.get(ctx.query.model);
     // 设置响应内容和响应状态码
-    ctx.success(bulletin);
+    ctx.success(fueloil);
   }
 }
-module.exports = BulletinsController;
+module.exports = FueloilsController;

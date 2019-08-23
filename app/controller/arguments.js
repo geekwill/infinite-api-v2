@@ -14,9 +14,9 @@ class ArgumentsController extends Controller {
    */
   async get() {
     const ctx = this.ctx;
-    ctx.validate(createRule, ctx.params);
+    ctx.validate(createRule, ctx.query);
     // 调用 service 创建一个 topic
-    const argument = await ctx.service.arguments.get(ctx.params.key);
+    const argument = await ctx.service.arguments.get(ctx.query.key);
     // 设置响应内容和响应状态码
     ctx.success(argument);
   }

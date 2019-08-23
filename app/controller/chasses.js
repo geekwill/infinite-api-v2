@@ -30,9 +30,9 @@ class ChassesController extends Controller {
    */
   async get() {
     const ctx = this.ctx;
-    ctx.validate(getRule, ctx.params);
+    ctx.validate(getRule, ctx.query);
     // 调用 service 创建一个 topic
-    const chasse = await ctx.service.chasses.get(ctx.params.key);
+    const chasse = await ctx.service.chasses.get(ctx.query.key);
     // 设置响应内容和响应状态码
     ctx.success(chasse);
   }

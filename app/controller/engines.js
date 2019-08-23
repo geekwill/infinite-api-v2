@@ -11,9 +11,9 @@ const createRule = {
 class EnginesController extends Controller {
   async get() {
     const ctx = this.ctx;
-    ctx.validate(createRule, ctx.params);
+    ctx.validate(createRule, ctx.query);
     // 调用 service 创建一个 topic
-    const engines = await ctx.service.engines.get(ctx.params.key);
+    const engines = await ctx.service.engines.get(ctx.query.key);
     // 设置响应内容和响应状态码
     ctx.success(engines);
   }
