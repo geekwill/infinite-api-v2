@@ -18,7 +18,7 @@ class UserService extends Service {
       // 用户信息
       const jwtData = user || await this.create(data, uuid.v4());
       // 生成 jwt token
-      return app.jwt.sign(jwtData, app.config.jwt.secret);
+      return app.jwt.sign({uuid: jwtData.uuid}, app.config.jwt.secret);
     } else {
       throw new Error(data.errmsg);
     }
@@ -47,7 +47,7 @@ class UserService extends Service {
     if (data && data.uuid) {
       // 合并最新用户信息存入数据库
       const mergeUser = Object.assign({}, data, user);
-      await app.mysql.update('user', user);
+      await app.mysql.update('user', mergeUser);
       return mergeUser;
     } else {
       // 不存在，生成 uuid 并增加用户信息
