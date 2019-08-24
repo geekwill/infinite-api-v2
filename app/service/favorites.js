@@ -9,10 +9,10 @@ class FavoritesService extends Service {
    * @param {Object} params 搜索参数
    * @param {Object} token 用户token
    */
-  async search(params, token) {
+  async search(params, uuid) {
     const favorites = await this.app.mysql.select('favorites', {
       where: {
-        token,
+        uuid,
       },
       limit: 10,
       offset: (params.page - 1) * 10,
@@ -25,8 +25,8 @@ class FavoritesService extends Service {
    * @param {string} key 公告key
    * @param {string} token 公告key
    */
-  async create(key, token) {
-    const favorite = await this.app.mysql.insert('favorites', { key, token });
+  async create(key, uuid) {
+    const favorite = await this.app.mysql.insert('favorites', { uuid });
     return favorite;
   }
 }
