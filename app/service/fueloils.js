@@ -9,7 +9,7 @@ class FueloilService extends Service {
    */
   async search(params) {
     const { model } = this.ctx;
-    const fueloils = await model.Fueloils.findAndCount({
+    const fueloils = await model.Fueloils.findAndCountAll({
       limit: 10,
       offset: (params.page - 1) * 10,
     });

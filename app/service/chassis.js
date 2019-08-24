@@ -9,7 +9,7 @@ class ChassisService extends Service {
    */
   async search(params) {
     const { model } = this.ctx;
-    const chassis = await model.Chassis.findAndCount({
+    const chassis = await model.Chassis.findAndCountAll({
       limit: 10,
       offset: (params.page - 1) * 10,
     });

@@ -9,7 +9,7 @@ class BulletinsService extends Service {
    */
   async search(params) {
     const { model } = this.ctx;
-    const bulletins = await model.Bulletins.findAndCount({
+    const bulletins = await model.Bulletins.findAndCountAll({
       limit: 10,
       offset: (params.page - 1) * 10,
     });
