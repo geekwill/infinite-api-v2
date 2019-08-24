@@ -1,16 +1,15 @@
 'use strict';
 
-// app/service/topics.js
 const Service = require('egg').Service;
 
 class FueloilService extends Service {
   /**
-   * 搜索公告
+   * 燃油公告
    * @param {Object} params 搜索参数
    */
   async search(params) {
-    // 假如 我们拿到用户 id 从数据库获取用户详细信息
-    const fueloils = await this.app.mysql.select('fueloils', {
+    const { model } = this.ctx;
+    const fueloils = await model.Fueloils.findAndCount({
       limit: 10,
       offset: (params.page - 1) * 10,
     });
@@ -18,12 +17,12 @@ class FueloilService extends Service {
   }
 
   /**
-   * 获取公告信息
-   * @param {*} model model
+   * 获取燃油公告信息
+   * @param {*} productModel model
    */
-  async get(model) {
-    // 假如 我们拿到用户 id 从数据库获取用户详细信息
-    const fueloil = await this.app.mysql.get('fueloils', { product_model: model });
+  async get(productModel) {
+    const { model } = this.ctx;
+    const fueloil = await model.Fueloils.findOne({ where: { product_model: productModel }, raw: true });
     return fueloil;
   }
 }

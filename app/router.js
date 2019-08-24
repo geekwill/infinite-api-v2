@@ -8,8 +8,8 @@ module.exports = app => {
   app.router.post('/api/v2/bulletins/search', app.controller.bulletins.search);
   app.router.get('/api/v2/bulletins', app.controller.bulletins.get);
   // 底盘
-  app.router.post('/api/v2/chasses/search', app.controller.chasses.search);
-  app.router.get('/api/v2/chasses', app.controller.chasses.get);
+  app.router.post('/api/v2/chassis/search', app.controller.chassis.search);
+  app.router.get('/api/v2/chassis', app.controller.chassis.get);
   // 参数
   app.router.get('/api/v2/arguments', app.controller.arguments.get);
   // 发动机
@@ -18,9 +18,9 @@ module.exports = app => {
   app.router.post('/api/v2/fueloils/search', app.controller.fueloils.search);
   app.router.get('/api/v2/fueloils', app.controller.fueloils.get);
   // 用户
-  app.router.post('/api/v2/user/create', app.jwt, app.controller.user.create)
+  app.router.post('/api/v2/user/register', app.jwt, app.controller.user.register);
   app.router.post('/api/v2/user/login', app.controller.user.login);
-  app.router.post('/api/v2/user/decryptData', app.controller.user.decryptData);
+  app.router.post('/api/v2/user/decryptPhone', app.jwt, app.controller.user.decryptPhone);
   // 收藏
   app.router.post('/api/v2/favorites/search', app.jwt, app.controller.favorites.search);
   app.router.get('/api/v2/favorites', app.jwt, app.controller.favorites.create);

@@ -21,7 +21,7 @@ class BulletinsController extends Controller {
     const { request, user, service } = ctx;
     ctx.validate(searchRule, request.body);
     // 调用 service 创建一个 topic
-    const favorites = await service.favorites.search(request.body, user.token);
+    const favorites = await service.favorites.search(request.body, user);
     // 设置响应内容和响应状态码
     ctx.success(favorites);
   }
@@ -35,7 +35,7 @@ class BulletinsController extends Controller {
 
     ctx.validate(createRule, ctx.request.body);
     // 调用 service 创建一个 topic
-    const favorite = await service.favorites.create(request.body.key, user.token);
+    const favorite = await service.favorites.create(request.body.key, user);
     // 设置响应内容和响应状态码
     ctx.success(favorite);
   }

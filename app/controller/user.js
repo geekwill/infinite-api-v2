@@ -18,7 +18,7 @@ const createRule = {
   country: 'string',
   province: 'string',
   city: 'string',
-  language: 'string'
+  language: 'string',
 };
 
 class UserController extends Controller {
@@ -35,15 +35,15 @@ class UserController extends Controller {
   }
 
   /**
-   * 解析微信加密数据
+   * 解析微信手机号
    */
-  async decryptData() {
+  async decryptPhone() {
     const { ctx } = this;
     const { user, service } = ctx;
     ctx.validate(decryptRule, ctx.request.body);
     // 解析微信 手机号
     const { encryptedData, iv } = ctx.request.body;
-    const data = await service.user.decryptData(user.sessionKey, encryptedData, iv);
+    const data = await service.user.decryptPhone(user, encryptedData, iv);
     ctx.success(data);
   }
 
@@ -51,11 +51,11 @@ class UserController extends Controller {
    * 创建用户
    * @return {[type]} [description]
    */
-  async create() {
+  async register() {
     const { ctx } = this;
     const { user, service } = ctx;
     ctx.validate(createRule, ctx.request.body);
-    const data = await service.user.create(ctx.request.body, user.uuid);
+    const data = await service.user.register(Object.assign({}, ctx.request.body, user));
     ctx.success(data);
   }
 }

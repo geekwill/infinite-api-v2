@@ -9,12 +9,12 @@ module.exports = {
   security: {
     enable: false,
   },
-  mysql: {
-    enable: true,
-    package: 'egg-mysql',
-  },
   jwt: {
     enable: true,
     package: 'egg-jwt',
+  },
+  sequelize: {
+    enable: true,
+    package: 'egg-sequelize',
   },
 };

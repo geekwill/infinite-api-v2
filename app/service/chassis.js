@@ -2,18 +2,18 @@
 
 const Service = require('egg').Service;
 
-class BulletinsService extends Service {
+class ChassisService extends Service {
   /**
-   * 搜索公告
+   * 搜索底盘公告
    * @param {Object} params 搜索参数
    */
   async search(params) {
     const { model } = this.ctx;
-    const bulletins = await model.Bulletins.findAndCount({
+    const chassis = await model.Chassis.findAndCount({
       limit: 10,
       offset: (params.page - 1) * 10,
     });
-    return bulletins;
+    return chassis;
   }
 
   /**
@@ -22,9 +22,9 @@ class BulletinsService extends Service {
    */
   async get(key) {
     const { model } = this.ctx;
-    const bulletin = await model.Bulletins.findOne({ where: { key }, raw: true });
-    return bulletin;
+    const chasse = await model.Chassis.findOne({ where: { key }, raw: true });
+    return chasse;
   }
 }
 
-module.exports = BulletinsService;
+module.exports = ChassisService;

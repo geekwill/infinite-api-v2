@@ -20,6 +20,9 @@ class WechatService extends Service {
     const { appId, appSecret } = app.config.wechat;
     const url = `${jscode2sessionUri}?appid=${appId}&secret=${appSecret}&js_code=${code}&grant_type=authorization_code`;
     const res = await ctx.curl(url, { dataType: 'json' });
+    if (res.data.errmsg) {
+      throw new Error(res.data.errmsg);
+    }
     return res.data;
   }
 
@@ -28,8 +31,7 @@ class WechatService extends Service {
    * @link https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/signature.html
    */
   async decryptData(sessionKey, encryptedData, iv) {
-    const { ctx, app, tokenUri } = this;
-    const { appId } = app.config.wechat;
+    const { appId } = this.app.config.wechat;
     const sessionKeyBuffer = new Buffer.from(sessionKey, 'base64');
     const encryptedDataBuffer = new Buffer.from(encryptedData, 'base64');
     const ivBuffer = new Buffer.from(iv, 'base64');
