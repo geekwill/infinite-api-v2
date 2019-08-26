@@ -5,7 +5,7 @@ module.exports = app => {
 
   const Favorites = app.model.define('favorites', {
     key: { type: STRING, comment: '公告Key' },
-    uuid: { type: STRING, comment: '用户ID' },
+    uuid: { type: STRING, comment: '用户UUID' },
   },
   {
     tableName: 'favorites',

@@ -11,7 +11,9 @@ class FavoritesService extends Service {
   async search(params, user) {
     const { app, ctx } = this;
     const { model } = ctx;
-    const sql = `SELECT bu.* FROM favorites fa LEFT JOIN bulletins bu ON fa.key = bu.key WHERE fa.uuid = '${user.uuid}' LIMIT ${(params.page - 1) * 10}, 10`;
+    const sql = `SELECT bu.* FROM favorites fa 
+      LEFT JOIN bulletins bu ON fa.key = bu.key 
+      WHERE fa.uuid = '${user.uuid}' LIMIT ${(params.page - 1) * 10}, 10`;
     const favorites = model.query(sql, { type: app.Sequelize.QueryTypes.SELECT });
     return favorites;
   }
@@ -21,10 +23,15 @@ class FavoritesService extends Service {
    * @param {string} key 公告key
    * @param {string} user 公告key
    */
-  async create(key, user) {
+  async createOrDelete(key, user) {
     const { model } = this.ctx;
-    const favorite = await model.Favorites.create({ key, uuid: user.uuid });
-    return favorite;
+    const findOne = await model.Favorites.findOne({ where: { key, uuid: user.uuid }, raw: true });
+    if (findOne) {
+      await model.Favorites.destroy({ where: { key, uuid: user.uuid } });
+    } else {
+      await model.Favorites.create({ key, uuid: user.uuid });
+    }
+    return true;
   }
 }
 

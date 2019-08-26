@@ -29,13 +29,13 @@ class BulletinsController extends Controller {
   /**
    * 增加用户收藏
    */
-  async create() {
+  async createOrDelete() {
     const ctx = this.ctx;
     const { request, user, service } = ctx;
 
     ctx.validate(createRule, ctx.request.body);
     // 调用 service 创建一个 topic
-    const favorite = await service.favorites.create(request.body.key, user);
+    const favorite = await service.favorites.createOrDelete(request.body.key, user);
     // 设置响应内容和响应状态码
     ctx.success(favorite);
   }

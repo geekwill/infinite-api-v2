@@ -23,5 +23,5 @@ module.exports = app => {
   app.router.post('/api/v2/user/decryptPhone', app.jwt, app.controller.user.decryptPhone);
   // 收藏
   app.router.post('/api/v2/favorites/search', app.jwt, app.controller.favorites.search);
-  app.router.get('/api/v2/favorites', app.jwt, app.controller.favorites.create);
+  app.router.post('/api/v2/favorites', app.jwt, app.controller.favorites.createOrDelete);
 };

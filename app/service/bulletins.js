@@ -12,6 +12,8 @@ class BulletinsService extends Service {
     const bulletins = await model.Bulletins.findAndCountAll({
       limit: 10,
       offset: (params.page - 1) * 10,
+      attributes: { exclude: [ 'html' ] },
+      order: [[ 'batch', 'DESC' ], [ 'updated_time', 'DESC' ]],
     });
     return bulletins;
   }
