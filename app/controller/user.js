@@ -17,7 +17,6 @@ const createRule = {
   gender: 'string',
   country: 'string',
   province: 'string',
-  city: 'string',
   language: 'string',
 };
 

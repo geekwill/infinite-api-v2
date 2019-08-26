@@ -49,7 +49,11 @@ class UserService extends Service {
     // 创建或者更新用户
     await model.User.upsert(user);
     // 查询最新用户信息
-    const result = await model.User.findOne({ where: { uuid: user.uuid }, raw: true });
+    const result = await model.User.findOne({
+      where: { uuid: user.uuid },
+      attributes: { exclude: [ 'session_key', 'openid' ] },
+      raw: true,
+    });
     return result;
   }
 }
