@@ -32,7 +32,7 @@ module.exports = app => {
     afterTread: { type: STRING, comment: '轮距（后)mm' },
     angle: { type: STRING, comment: '接近角/离去角' },
     identCompany: { type: STRING, comment: '反光标识生产企业' },
-    identCodel: { type: STRING, comment: '反光标识型号' },
+    identModel: { type: STRING, comment: '反光标识型号' },
     identBrand: { type: STRING, comment: '反光标识商标' },
     abs: { type: STRING, comment: '防抱死制动系统' },
     vin: { type: STRING, comment: '车辆识别代号' },
