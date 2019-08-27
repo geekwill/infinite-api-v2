@@ -15,11 +15,11 @@ class UserService extends Service {
     const wechat = await service.wechat.login(code);
     // 查找创建 open 用户
     const data = { uuid: uuid.v4(), sessionKey: wechat.session_key, openId: wechat.openid };
-    let [ user, created ] = await model.User.findOrCreate({ where: { openId: data.openId }, defaults: data, raw: true });
+    const [ user, created ] = await model.User.findOrCreate({ where: { openId: data.openId }, defaults: data, raw: true });
     if (!created) {
       // 需要更新 session_key 以免解密失败
       user.sessionKey = wechat.session_key;
-      await model.User.update(user, { where: { uuid: user.uuid }, fields: ['sessionKey'] });
+      await model.User.update(user, { where: { uuid: user.uuid }, fields: [ 'sessionKey' ] });
     }
     // 缓存 redis 并生成 jwttoken
     await app.redis.set(user.uuid, JSON.stringify(user));
