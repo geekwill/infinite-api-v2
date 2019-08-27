@@ -10,8 +10,6 @@ module.exports = app => {
   {
     tableName: 'favorites',
     underscored: true,
-    createdAt: 'created_time',
-    updatedAt: 'updated_time',
     comment: '用户收藏表',
   });
 

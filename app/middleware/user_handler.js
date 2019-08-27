@@ -9,7 +9,9 @@ module.exports = (option, app) => {
         // 截取 token 部分
         const token = authorization.split(' ')[1];
         // 解析 token 里的用户信息
-        ctx.user = app.jwt.decode(token);
+        const uuid = app.jwt.decode(token);
+        const user = await app.redis.get(uuid);
+        ctx.user = JSON.parse(user);
       }
       await next();
     } catch (err) {

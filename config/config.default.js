@@ -11,6 +11,14 @@ module.exports = {
     username: 'root',
     password: 'root',
   },
+  redis: {
+    client: {
+      port: 6379,
+      host: '127.0.0.1',
+      password: 'qq191754850',
+      db: 0,
+    },
+  },
   jwt: {
     secret: '7956d314-daed-4b8c-8792-c25919b623a8',
   },

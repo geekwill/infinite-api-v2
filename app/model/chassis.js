@@ -10,9 +10,9 @@ module.exports = app => {
     model: { type: STRING, comment: '型号' },
     brand: { type: STRING, comment: '商标' },
     category: { type: STRING, comment: '类别' },
-    company_name: { type: STRING, comment: '企业名称' },
-    register_adrr: { type: STRING, comment: '注册地址' },
-    production_adrr: { type: STRING, comment: '生产地址' },
+    companyName: { type: STRING, comment: '企业名称' },
+    registerAdrr: { type: STRING, comment: '注册地址' },
+    productionAdrr: { type: STRING, comment: '生产地址' },
     serial: { type: STRING, comment: '序号' },
     images: { type: STRING, comment: '图片' },
     html: { type: TEXT, comment: 'html代码保存' },
@@ -20,8 +20,6 @@ module.exports = app => {
   {
     tableName: 'chassis',
     underscored: true,
-    createdAt: 'created_time',
-    updatedAt: 'updated_time',
     comment: '底盘信息表',
   });
 

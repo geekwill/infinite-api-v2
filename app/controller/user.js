@@ -40,8 +40,8 @@ class UserController extends Controller {
     const { ctx } = this;
     const { user, service } = ctx;
     ctx.validate(decryptRule, ctx.request.body);
-    // 解析微信 手机号
     const { encryptedData, iv } = ctx.request.body;
+    // 解析微信 手机号
     const data = await service.user.decryptPhone(user, encryptedData, iv);
     ctx.success(data);
   }
@@ -54,7 +54,7 @@ class UserController extends Controller {
     const { ctx } = this;
     const { user, service } = ctx;
     ctx.validate(createRule, ctx.request.body);
-    const data = await service.user.register(Object.assign({}, ctx.request.body, user));
+    const data = await service.user.register(Object.assign({}, user, ctx.request.body));
     ctx.success(data);
   }
 }
