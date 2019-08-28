@@ -20,16 +20,17 @@ class FavoritesService extends Service {
 
   /**
    * 增加用户收藏
-   * @param {string} key 公告key
+   * @param {string} params 公告key
    * @param {string} user 公告key
    */
-  async createOrDelete(key, user) {
+  async createOrDelete(params, user) {
     const { model } = this.ctx;
-    const findOne = await model.Favorites.findOne({ where: { key, uuid: user.uuid }, raw: true });
+    const where = Object.assign({}, params, { uuid: user.uuid });
+    const findOne = await model.Favorites.findOne({ where, raw: true });
     if (findOne) {
-      await model.Favorites.destroy({ where: { key, uuid: user.uuid } });
+      await model.Favorites.destroy({ where });
     } else {
-      await model.Favorites.create({ key, uuid: user.uuid });
+      await model.Favorites.create(where);
     }
     return true;
   }

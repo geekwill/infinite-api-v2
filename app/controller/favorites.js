@@ -35,7 +35,7 @@ class BulletinsController extends Controller {
 
     ctx.validate(createRule, request.body);
     // 调用 service 创建一个 topic
-    const favorite = await service.favorites.createOrDelete(request.body.key, user);
+    const favorite = await service.favorites.createOrDelete(request.body, user);
     // 设置响应内容和响应状态码
     ctx.success(favorite);
   }
