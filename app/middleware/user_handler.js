@@ -11,6 +11,7 @@ module.exports = (option, app) => {
         // 解析 token 里的用户信息
         const uuid = app.jwt.decode(token);
         const user = await app.redis.get(uuid);
+        console.log('token:::', token, 'uuid:::', uuid, 'user:::', user);
         ctx.user = JSON.parse(user);
       }
       await next();

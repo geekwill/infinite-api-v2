@@ -33,6 +33,17 @@ class FavoritesService extends Service {
     }
     return true;
   }
+
+  /**
+   * 获取收藏信息
+   * @param {string} key 公告key
+   * @param {string} user 公告key
+   */
+  async get(key, user) {
+    const { model } = this.ctx;
+    const findOne = await model.Favorites.findOne({ where: { key, uuid: user.uuid }, raw: true });
+    return findOne;
+  }
 }
 
 module.exports = FavoritesService;

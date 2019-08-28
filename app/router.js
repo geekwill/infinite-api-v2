@@ -24,4 +24,5 @@ module.exports = app => {
   // 收藏
   app.router.post('/api/v2/favorites/search', app.jwt, app.controller.favorites.search);
   app.router.post('/api/v2/favorites', app.jwt, app.controller.favorites.createOrDelete);
+  app.router.get('/api/v2/favorites', app.jwt, app.controller.favorites.favorites);
 };

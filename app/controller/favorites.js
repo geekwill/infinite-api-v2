@@ -33,9 +33,22 @@ class BulletinsController extends Controller {
     const ctx = this.ctx;
     const { request, user, service } = ctx;
 
-    ctx.validate(createRule, ctx.request.body);
+    ctx.validate(createRule, request.body);
     // 调用 service 创建一个 topic
     const favorite = await service.favorites.createOrDelete(request.body.key, user);
+    // 设置响应内容和响应状态码
+    ctx.success(favorite);
+  }
+
+  /**
+   * 查询收藏信息
+   */
+  async favorites() {
+    const ctx = this.ctx;
+    const { user, service, query } = ctx;
+    ctx.validate(createRule, query);
+    // 调用 service 创建一个 topic
+    const favorite = await service.favorites.get(query.key, user);
     // 设置响应内容和响应状态码
     ctx.success(favorite);
   }

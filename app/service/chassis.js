@@ -12,7 +12,7 @@ class ChassisService extends Service {
     const { model } = ctx;
 
     const sqlArray = [];
-    sqlArray.push('SELECT ch.key, ch.images, ch.name, ch.brand, ch.batch, ch.model, ch.company_name');
+    sqlArray.push('SELECT ch.key, ch.images, ch.name, ch.brand, ch.batch, ch.model, ch.company_name as companyName');
     sqlArray.push('FROM chassis ch');
     sqlArray.push('LEFT JOIN engines en ON ch.key = en.key');
     sqlArray.push('LEFT JOIN arguments ar ON ch.key = ar.key');
