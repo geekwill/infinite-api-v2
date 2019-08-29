@@ -13,7 +13,7 @@ class ChassisService extends Service {
 
     const sqlArray = [];
     sqlArray.push('SELECT ch.key, ch.images, ch.name, ch.brand, ch.batch, ch.model, ch.company_name as companyName');
-    sqlArray.push(`FROM (SELECT * FROM chassis ORDER BY batch DESC LIMIT ${(params.page - 1) * 10}, 10) as ch`);
+    sqlArray.push('FROM (SELECT * FROM chassis ORDER BY batch DESC) as ch');
     sqlArray.push('LEFT JOIN engines en ON ch.key = en.key');
     sqlArray.push('LEFT JOIN arguments ar ON ch.key = ar.key');
     sqlArray.push('WHERE 1 = 1');
@@ -37,9 +37,9 @@ class ChassisService extends Service {
     if (params.engineVolume) sqlArray.push(`AND en.volume = ${params.engineVolume}`);
     if (params.enginePower) sqlArray.push(`AND en.power = ${params.enginePower}`);
     if (params.engineCompany) sqlArray.push(`AND en.company LIKE '%${params.engineCompany}%'`);
+    sqlArray.push(`LIMIT ${(params.page - 1) * 10}, 10;`);
     // 拼接 SQL 执行查询
     const sql = sqlArray.join(' ');
-    console.log(sql);
     const list = await model.query(sql, { type: app.Sequelize.QueryTypes.SELECT });
     return list;
   }
