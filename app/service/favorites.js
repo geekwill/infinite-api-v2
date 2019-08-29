@@ -11,8 +11,16 @@ class FavoritesService extends Service {
   async search(params, user) {
     const { app, ctx } = this;
     const { model } = ctx;
-    const sql = `SELECT bu.* FROM favorites fa 
-      LEFT JOIN bulletins bu ON fa.key = bu.key 
+    const sql = `SELECT fa.*, 
+        if( fa.type = 1, bu.name, ch.name) name,
+        if( fa.type = 1, bu.brand, ch.brand) brand,
+        if( fa.type = 1, bu.batch, ch.batch) batch,
+        if( fa.type = 1, bu.model, ch.model) model,
+        if( fa.type = 1, bu.company_name, ch.company_name) companyName,
+        if( fa.type = 1, bu.images, ch.images) images
+      FROM favorites fa 
+      LEFT JOIN bulletins bu ON fa.key = bu.key AND fa.type = 1
+      LEFT JOIN chassis ch ON fa.key = ch.key AND fa.type = 2
       WHERE fa.uuid = '${user.uuid}' LIMIT ${(params.page - 1) * 10}, 10`;
     const favorites = model.query(sql, { type: app.Sequelize.QueryTypes.SELECT });
     return favorites;
