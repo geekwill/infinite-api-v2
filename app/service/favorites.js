@@ -5,10 +5,9 @@ const Service = require('egg').Service;
 class FavoritesService extends Service {
   /**
    * 搜索用户收藏
-   * @param {Object} params 搜索参数
    * @param {Object} user 用户token
    */
-  async search(params, user) {
+  async search(user) {
     const { app, ctx } = this;
     const { model } = ctx;
     const sql = `SELECT fa.*, 
@@ -21,7 +20,7 @@ class FavoritesService extends Service {
       FROM favorites fa 
       LEFT JOIN bulletins bu ON fa.key = bu.key AND fa.type = 1
       LEFT JOIN chassis ch ON fa.key = ch.key AND fa.type = 2
-      WHERE fa.uuid = '${user.uuid}' LIMIT ${(params.page - 1) * 10}, 10`;
+      WHERE fa.uuid = '${user.uuid}'`;
     const favorites = model.query(sql, { type: app.Sequelize.QueryTypes.SELECT });
     return favorites;
   }
