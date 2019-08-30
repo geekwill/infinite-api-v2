@@ -21,7 +21,7 @@ module.exports = app => {
     indexes: [
       {
         unique: true,
-        fields: [ 'uuid', 'phone', 'openId' ],
+        fields: [ 'uuid', 'phone', 'open_id' ],
       },
     ],
   });

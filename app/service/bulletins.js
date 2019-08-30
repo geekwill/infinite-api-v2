@@ -12,19 +12,21 @@ class BulletinsService extends Service {
     const { model } = ctx;
 
     const sqlArray = [];
-    sqlArray.push('SELECT bu.key, ch.key as chassisKey, bu.images, bu.name, bu.brand, bu.batch, bu.model, bu.company_name as companyName');
-    sqlArray.push('FROM (SELECT * FROM bulletins ORDER BY batch DESC) as bu');
+    sqlArray.push('SELECT DISTINCT bu.key, ch.key as chassisKey, bu.images, bu.name, bu.brand, bu.batch, bu.model, bu.company_name as companyName');
+    sqlArray.push('FROM (SELECT * FROM bulletins WHERE 1 = 1');
+    // 基础参数条件
+    if (params.batchMin || params.batchMax) sqlArray.push(`AND batch BETWEEN ${params.batchMin || 0} AND ${params.batchMax || 0}`);
+    if (params.model) sqlArray.push(`AND model LIKE '%${params.model}%'`);
+    if (params.name) sqlArray.push(`AND name LIKE '%${params.name}%'`);
+    if (params.brand) sqlArray.push(`AND brand LIKE '%${params.brand}%'`);
+    if (params.companyName) sqlArray.push(`AND company_name LIKE '%${params.companyName}%'`);
+    if (params.productionAdrr) sqlArray.push(`AND production_adrr LIKE '%${params.productionAdrr}%'`);
+    sqlArray.push(`ORDER BY batch DESC LIMIT ${(params.page - 1) * 10}, 10) as bu`);
+    // 链接表
     sqlArray.push('LEFT JOIN chassis ch ON bu.chassis_model = ch.model');
     sqlArray.push('LEFT JOIN engines en ON bu.key = en.key');
     sqlArray.push('LEFT JOIN arguments ar ON bu.key = ar.key');
     sqlArray.push('WHERE 1 = 1');
-    // 基础参数条件
-    if (params.batchMin || params.batchMax) sqlArray.push(`AND bu.batch BETWEEN ${params.batchMin || 0} AND ${params.batchMax || 0}`);
-    if (params.model) sqlArray.push(`AND bu.model LIKE '%${params.model}%'`);
-    if (params.name) sqlArray.push(`AND bu.name LIKE '%${params.name}%'`);
-    if (params.brand) sqlArray.push(`AND bu.brand LIKE '%${params.brand}%'`);
-    if (params.companyName) sqlArray.push(`AND bu.company_name LIKE '%${params.companyName}%'`);
-    if (params.productionAdrr) sqlArray.push(`AND bu.production_adrr LIKE '%${params.productionAdrr}%'`);
     // 配置参数条件
     if (params.axles) sqlArray.push(`AND ar.axles = '${params.axles}'`);
     if (params.wheelBase) sqlArray.push(`AND ar.wheel_base = '${params.wheelBase}'`);
@@ -51,7 +53,6 @@ class BulletinsService extends Service {
     if (params.engineVolume) sqlArray.push(`AND en.volume = ${params.engineVolume}`);
     if (params.enginePower) sqlArray.push(`AND en.power = ${params.enginePower}`);
     if (params.engineCompany) sqlArray.push(`AND en.company LIKE '%${params.engineCompany}%'`);
-    sqlArray.push(`LIMIT ${(params.page - 1) * 10}, 10;`);
     // 拼接 SQL 执行查询
     const sql = sqlArray.join(' ');
     const list = await model.query(sql, { type: app.Sequelize.QueryTypes.SELECT });

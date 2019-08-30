@@ -16,6 +16,9 @@ module.exports = app => {
     underscored: true,
     comment: '发动机信息表',
     indexes: [{
+      unique: true,
+      fields: [ 'key', 'model' ],
+    }, {
       fields: [ 'key', 'model' ],
       where: {
         status: 'public',

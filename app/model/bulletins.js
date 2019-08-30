@@ -1,11 +1,11 @@
 'use strict';
 
 module.exports = app => {
-  const { STRING, TEXT } = app.Sequelize;
+  const { STRING, TEXT, INTEGER } = app.Sequelize;
 
   const Bulletins = app.model.define('bulletins', {
     key: { type: STRING, unique: true },
-    batch: { type: STRING, comment: '批次' },
+    batch: { type: INTEGER, comment: '批次' },
     name: { type: STRING, comment: '名称' },
     model: { type: STRING, comment: '型号' },
     chassisModel: { type: STRING, comment: '底盘型号' },
@@ -23,6 +23,12 @@ module.exports = app => {
     tableName: 'bulletins',
     underscored: true,
     comment: '公告信息表',
+    indexes: [{
+      fields: [ 'key', 'model', 'chassis_model', 'batch' ],
+      where: {
+        status: 'public',
+      },
+    }],
   });
 
   return Bulletins;

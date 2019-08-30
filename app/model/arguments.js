@@ -45,6 +45,12 @@ module.exports = app => {
     tableName: 'arguments',
     underscored: true,
     comment: '公告车辆参数表',
+    indexes: [{
+      fields: [ 'key' ],
+      where: {
+        status: 'public',
+      },
+    }],
   });
 
   return Arguments;
